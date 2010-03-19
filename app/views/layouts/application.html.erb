@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title></title>
+    <%=javascript_include_tag :defaults %>
+    <%=javascript_include_tag 'fullcalendar', 'gcal', 'application' %>
+    <%=stylesheet_link_tag 'fullcalendar', 'jquery-ui', 'dialog' %>
+  </head>
+  <body class="subpage">
+    <div class="wrapper">
+      <div class="subPageContent">
+        <% if flash[:notice] -%>
+        <div id = 'flash_notice'>
+          <%= flash[:notice] %>
+        </div>
+        <% end -%>
+        <% if flash[:error] -%>
+        <div id = 'flash_error'>
+          <%= flash[:error] %>
+        </div>
+        <%end -%>
+        <div id = 'loading'>
+          Loading...
+        </div>
+        <div class="aplicationContent">
+          <div class="appRightContent">
+            <%= yield %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

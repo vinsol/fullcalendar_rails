@@ -1,0 +1,31 @@
+<%remote_form_for @event, :url => {:action => :update} do |f| %>
+<p>
+  <%=f.label :title %>
+  <br/>
+  <%=f.text_field :title %>
+</p>
+<p>
+  <%=f.label :description %>
+  <br/>
+  <%=f.text_area :description, :rows => 4, :cols => 30 %>
+</p>
+<p>
+  <%=f.label :starttime, 'Start Time' %>
+  <br/>
+  <%=f.datetime_select :starttime %>
+</p>
+<p>
+  <%=f.label :endtime, 'End Time' %>
+  <br/>
+  <%=f.datetime_select :endtime %>
+</p>
+<p>
+  <%=f.label :all_day %>
+  <%=f.check_box :all_day %>
+  
+</p>
+<%=f.hidden_field :id, :value => @event.id%>
+<p>
+  <%=f.submit 'Update'%>
+</p>
+<%end %>
