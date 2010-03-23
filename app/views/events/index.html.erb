@@ -27,21 +27,21 @@
           timeFormat: 'h:mm t{ - h:mm t} ',
           dragOpacity: "0.5",
           eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc){
-              if (confirm("Are you sure about this change?")) {
+//              if (confirm("Are you sure about this change?")) {
                   moveEvent(event, dayDelta, minuteDelta, allDay);
-              }
-              else {
-                  revertFunc();
-              }
+//              }
+//              else {
+//                  revertFunc();
+//              }
           },
           
           eventResize: function(event, dayDelta, minuteDelta, revertFunc){
-              if (confirm("Are you sure about this change?")) {
+//              if (confirm("Are you sure about this change?")) {
                   resizeEvent(event, dayDelta, minuteDelta);
-              }
-              else {
-                  revertFunc();
-              }
+//              }
+//              else {
+//                  revertFunc();
+//              }
           },
           
           eventClick: function(event, jsEvent, view){
