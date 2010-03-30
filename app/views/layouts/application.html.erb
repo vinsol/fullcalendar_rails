@@ -1,10 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <title></title>
+    <title>jQuery full calendar with rails</title>
     <%=javascript_include_tag :defaults %>
     <%=javascript_include_tag 'fullcalendar', 'gcal', 'application' %>
-    <%=stylesheet_link_tag 'fullcalendar', 'jquery-ui', 'dialog' %>
+    <%=stylesheet_link_tag "style", 'fullcalendar', 'jquery-ui', 'dialog' %>
   </head>
   <body class="subpage">
     <div class="wrapper">
@@ -19,9 +19,11 @@
           <%= flash[:error] %>
         </div>
         <%end -%>
-        <div id = 'loading'>
-          Loading...
-        </div>
+        <span>
+          <div id = 'loading'>
+            Loading...
+          </div>
+        </span>
         <div class="aplicationContent">
           <div class="appRightContent">
             <%= yield %>
