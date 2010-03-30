@@ -1,15 +1,18 @@
 class EventsController < ApplicationController
-
+  
   def new
-    @event = Event.new
+    @event = Event.new(:endtime => 1.hour.from_now)
   end
   
   def create
     @event = Event.new(params[:event])
-    @event.save
     render :update do |page|
-      page<<"$('#calendar').fullCalendar( 'refetchEvents' )"
-      page<<"$('#create_event_dialog').dialog('destroy')" 
+      if @event.save
+        page<<"$('#calendar').fullCalendar( 'refetchEvents' )"
+        page<<"$('#create_event_dialog').dialog('destroy')"
+      else
+        page.alert @event.errors.full_messages(',').join("\n")
+      end
     end    
   end
   

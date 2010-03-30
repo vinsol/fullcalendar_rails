@@ -1,0 +1,30 @@
+# == Schema Information
+# Schema version: 20100330111833
+#
+# Table name: event_series
+#
+#  id         :integer(4)      not null, primary key
+#  frequency  :integer(4)      default(1)
+#  period     :string(255)     default("months")
+#  starttime  :datetime
+#  endtime    :datetime
+#  all_day    :boolean(1)
+#  created_at :datetime
+#  updated_at :datetime
+#
+
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  frequency: 1
+  period: MyString
+  starttime: 2010-03-30 16:46:48
+  endtime: 2010-03-30 16:46:48
+  all_day: false
+
+two:
+  frequency: 1
+  period: MyString
+  starttime: 2010-03-30 16:46:48
+  endtime: 2010-03-30 16:46:48
+  all_day: false
