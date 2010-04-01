@@ -1,4 +1,4 @@
-<%remote_form_for @event, :url => {:action => :create} do |f| %>
+<%remote_form_for @event, :url => {:action => :create}, :before => "$('#creating_events').show();", :complete => "$('#creating_events').hide();" do |f| %>
 <p>
   <%=f.label :title %>
   <br/>
@@ -22,10 +22,17 @@
 <p>
   <%=f.label :all_day %>
   <%=f.check_box :all_day %>
-  
 </p>
-<%=f.hidden_field :id, :value => @event.id%>
 <p>
-  <%=f.submit 'Create'%>
+  <%=f.label :period, "Repeats" %>
+  <%=f.select :period, Event::REPEATS,{}, :onchange => "showPeriodAndFrequency(this.value);" %>
+</p>
+<p id = "frequency" style = "display:none;">
+  <%=f.label :frequency, "Repeat every" %>
+  <%=f.select :frequency, (1..30).to_a %> <span id = "period"></span>
+</p>
+<%=f.hidden_field :id, :value => @event.id %>
+<p>
+  <%=f.submit 'Create' %> <span id = "creating_events" style = "display:none;">Creating, Please wait...</span>
 </p>
 <%end %>

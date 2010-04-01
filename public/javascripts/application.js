@@ -21,14 +21,25 @@ function resizeEvent(event, dayDelta, minuteDelta){
 
 function showEventDetails(event){
     $('#event_desc').html(event.description);
-    $('#edit_event').html("<a href = 'javascript:void(0);' onclick ='editEvent("+event.id+")'>Edit</a>");
-    $('#delete_event').html("<a href = 'javascript:void(0);' onclick ='deleteEvent("+event.id+")'>Delete</a>");
+    $('#edit_event').html("<a href = 'javascript:void(0);' onclick ='editEvent(" + event.id + ")'>Edit</a>");
+    if (event.recurring) {
+        title = event.title + "(Recurring)";
+        $('#delete_event').html("&nbsp; <a href = 'javascript:void(0);' onclick ='deleteEvent(" + event.id + ", " + false + ")'>Delete Only This Occurrence</a>");
+        $('#delete_event').append("&nbsp;&nbsp; <a href = 'javascript:void(0);' onclick ='deleteEvent(" + event.id + ", " + true + ")'>Delete All In Series</a>")
+        $('#delete_event').append("&nbsp;&nbsp; <a href = 'javascript:void(0);' onclick ='deleteEvent(" + event.id + ", \"future\")'>Delete All Future Events</a>")
+    }
+    else {
+        title = event.title;
+        $('#delete_event').html("<a href = 'javascript:void(0);' onclick ='deleteEvent(" + event.id + ", " + false + ")'>Delete</a>");
+    }
     $('#desc_dialog').dialog({
-        title: event.title,
+        title: title,
         modal: true,
         width: 500,
-        close: function(event, ui) { $('#desc_dialog').dialog('destroy') }
-
+        close: function(event, ui){
+            $('#desc_dialog').dialog('destroy')
+        }
+        
     });
     
 }
@@ -40,14 +51,43 @@ function editEvent(event_id){
         dataType: 'script',
         type: 'get',
         url: "/events/edit"
-    });  
+    });
 }
 
-function deleteEvent(event_id){
+function deleteEvent(event_id, delete_all){
     jQuery.ajax({
-        data: 'id=' + event_id,
+        data: 'id=' + event_id + '&delete_all='+delete_all,
         dataType: 'script',
         type: 'post',
         url: "/events/destroy"
-    });  
+    });
+}
+
+function showPeriodAndFrequency(value){
+
+    switch (value) {
+        case 'Daily':
+            $('#period').html('day');
+            $('#frequency').show();
+            break;
+        case 'Weekly':
+            $('#period').html('week');
+            $('#frequency').show();
+            break;
+        case 'Monthly':
+            $('#period').html('month');
+            $('#frequency').show();
+            break;
+        case 'Yearly':
+            $('#period').html('year');
+            $('#frequency').show();
+            break;
+            
+        default:
+            $('#frequency').hide();
+    }
+    
+    
+    
+    
 }

@@ -1,5 +1,5 @@
 <p>
-  <%=link_to_remote 'Create Event', :url => {:action => :new} %>
+  <%=link_to_remote 'Create Event', :url => {:action => :new}, :before => "$('#loading').show()", :complete => "$('#loading').hide()" %>
 </p>
 
 <script>
