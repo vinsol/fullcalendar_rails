@@ -17,3 +17,7 @@ body{
 span > div#loading {
   position: fixed;
 }
+
+h1{
+font-size: 16px;
+}
