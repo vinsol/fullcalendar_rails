@@ -6,7 +6,7 @@ by <a href = 'http://webonrails.com'>Akhil Bansal</a> at <a href='http://vinsol.
 </center>
 <br>
 <p>
-  <%=link_to_remote 'Create Event', :url => {:action => :new}, :before => "$('#loading').show()", :complete => "$('#loading').hide()" %>
+  <%=link_to 'Create Event', new_event_url, :id => 'new_event' %>
 </p>
 
 <script>
@@ -14,6 +14,29 @@ by <a href = 'http://webonrails.com'>Akhil Bansal</a> at <a href='http://vinsol.
   
   $(document).ready(function(){
       // page is now ready, initialize the calendar...
+      $('#new_event').click(function(event) {
+        event.preventDefault();
+        var url = $(this).attr('href');
+        $.ajax({
+          url: url,
+          beforeSend: function() {
+            $('#loading').show();
+          },
+          complete: function() {
+            $('#loading').hide();
+          },
+          success: function(data) {
+            $('#create_event').replaceWith(data['form']);
+            $('#create_event_dialog').dialog({
+              title: 'New Event',
+              modal: true,
+              width: 500,
+              close: function(event, ui) { $('#create_event_dialog').dialog('destroy') }
+            });
+          }
+        });
+      });
+
       $('#calendar').fullCalendar({
           editable: true,
           header: {

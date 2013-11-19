@@ -54,6 +54,11 @@ FullcalendarRails::Application.routes.draw do
   #     resources :products
   #   end
   root :to => 'events#index'
+  resources :events do 
+    collection do 
+      get :get_events
+    end
+  end
 end
 
 
