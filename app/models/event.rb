@@ -18,6 +18,7 @@ class Event < ActiveRecord::Base
   attr_accessor :period, :frequency, :commit_button
   
   validates_presence_of :title, :description
+  validate :validate_timings
   
   belongs_to :event_series
   
@@ -29,9 +30,9 @@ class Event < ActiveRecord::Base
               "Yearly"         
   ]
   
-  def validate
+  def validate_timings
     if (starttime >= endtime) and !all_day
-      errors.add_to_base("Start Time must be less than End Time")
+      errors[:base] << "Start Time must be less than End Time"
     end
   end
   
