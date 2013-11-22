@@ -43,6 +43,7 @@ class EventsController < ApplicationController
       @event.all_day = params[:all_day]
       @event.save
     end
+    render :nothing => true
   end
   
   

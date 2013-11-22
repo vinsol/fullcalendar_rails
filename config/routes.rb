@@ -57,6 +57,7 @@ FullcalendarRails::Application.routes.draw do
   resources :events do 
     collection do 
       get :get_events
+      post :move
     end
   end
 end
