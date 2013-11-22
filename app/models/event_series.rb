@@ -20,12 +20,10 @@ class EventSeries < ActiveRecord::Base
   validates_presence_of :title, :description
   
   has_many :events, :dependent => :destroy
+
+  after_create :create_events_until_end_time
   
-  def after_create
-    create_events_until(END_TIME)
-  end
-  
-  def create_events_until(end_time)
+  def create_events_until_end_time(end_time=END_TIME)
     st = starttime
     et = endtime
     p = r_period(period)

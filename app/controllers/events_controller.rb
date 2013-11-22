@@ -58,26 +58,22 @@ class EventsController < ApplicationController
   
   def edit
     @event = Event.find_by_id(params[:id])
+    render :json => { :form => render_to_string(:partial => 'edit_form') } 
   end
   
   def update
     @event = Event.find_by_id(params[:event][:id])
     if params[:event][:commit_button] == "Update All Occurrence"
       @events = @event.event_series.events #.find(:all, :conditions => ["starttime > '#{@event.starttime.to_formatted_s(:db)}' "])
-      @event.update_events(@events, params[:event])
+      @event.update_events(@events, event_params)
     elsif params[:event][:commit_button] == "Update All Following Occurrence"
       @events = @event.event_series.events.find(:all, :conditions => ["starttime > '#{@event.starttime.to_formatted_s(:db)}' "])
-      @event.update_events(@events, params[:event])
+      @event.update_events(@events, event_params)
     else
-      @event.attributes = params[:event]
+      @event.attributes = event_params
       @event.save
     end
-
-    render :update do |page|
-      page<<"$('#calendar').fullCalendar( 'refetchEvents' )"
-      page<<"$('#desc_dialog').dialog('destroy')" 
-    end
-    
+    render :nothing => true    
   end  
   
   def destroy
@@ -100,7 +96,7 @@ class EventsController < ApplicationController
 
   private
     def event_params
-      params.require(:event).permit('title', 'description', 'starttime(1i)', 'starttime(2i)', 'starttime(3i)', 'starttime(4i)', 'starttime(5i)', 'endtime(1i)', 'endtime(2i)', 'endtime(3i)', 'endtime(4i)', 'endtime(5i)', 'all_day', 'period', 'frequency', 'id')
+      params.require(:event).permit('title', 'description', 'starttime(1i)', 'starttime(2i)', 'starttime(3i)', 'starttime(4i)', 'starttime(5i)', 'endtime(1i)', 'endtime(2i)', 'endtime(3i)', 'endtime(4i)', 'endtime(5i)', 'all_day', 'period', 'frequency', 'id', 'commit_button')
     end
   
 end

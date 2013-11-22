@@ -1,4 +1,4 @@
-<%remote_form_for @event, :url => {:action => :update} , :before => "$('#updating_events').show();", :complete => "$('#updating_events').hide();" do |f| %>
+<%= form_for @event, :html => { :id => 'event_form' } do |f| %>
 <p>
   <%=f.label :title %>
   <br/>
@@ -24,7 +24,7 @@
   <%=f.check_box :all_day %>
 </p>
 <%if false%>
-<%period = (@event.event_series)?@event.event_series.period : nil -%>
+<%period = (@event.event_series)? @event.event_series.period : nil -%>
 <p>
   <%=f.label :period, "Repeats" %>
   <%=f.select :period, Event::REPEATS,{:selected => period}, :onchange => "showPeriodAndFrequency(this.value);" %>
@@ -46,6 +46,6 @@
   <%=f.submit 'Update', :onclick => "document.getElementById('event_commit_button').value = this.value"%>
   <%end-%>
   
-  <span id = "updating_events" style = "display:none;">Updating, Please wait...</span>
+  <span id = "updating_events" class="spinner" style = "display:none;">Updating, Please wait...</span>
 </p>
 <%end %>

@@ -49,10 +49,10 @@ function showEventDetails(event){
 
 function editEvent(event_id){
     jQuery.ajax({
-        data: 'id=' + event_id,
-        dataType: 'script',
-        type: 'get',
-        url: "/events/edit"
+      url: "/events/" + event_id + "/edit",
+      success: function(data) {
+        $('#event_desc').html(data['form']);
+      } 
     });
 }
 
@@ -94,7 +94,7 @@ function showPeriodAndFrequency(value){
     
 }
 $(document).ready(function(){
-  $('#create_event_dialog').on('submit', "#event_form", function(event) {
+  $('#create_event_dialog, #desc_dialog').on('submit', "#event_form", function(event) {
     var $spinner = $('.spinner');
     event.preventDefault();
     $.ajax({
@@ -117,7 +117,7 @@ $(document).ready(function(){
 
     function handle_success() {
       $('#calendar').fullCalendar( 'refetchEvents' );
-      $('#create_event_dialog').dialog('destroy');
+      $('.dialog:visible').dialog('destroy');
     }
 
     function handle_error(xhr) {
