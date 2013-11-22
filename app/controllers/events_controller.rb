@@ -53,6 +53,7 @@ class EventsController < ApplicationController
       @event.endtime = (params[:minute_delta].to_i).minutes.from_now((params[:day_delta].to_i).days.from_now(@event.endtime))
       @event.save
     end    
+    render :nothing => true
   end
   
   def edit

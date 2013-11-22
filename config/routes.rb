@@ -58,6 +58,7 @@ FullcalendarRails::Application.routes.draw do
     collection do 
       get :get_events
       post :move
+      post :resize
     end
   end
 end
