@@ -86,12 +86,7 @@ class EventsController < ApplicationController
     else
       @event.destroy
     end
-    
-    render :update do |page|
-      page<<"$('#calendar').fullCalendar( 'refetchEvents' )"
-      page<<"$('#desc_dialog').dialog('destroy')" 
-    end
-    
+    render :nothing => true   
   end
 
   private

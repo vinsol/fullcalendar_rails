@@ -57,12 +57,18 @@ function editEvent(event_id){
 }
 
 function deleteEvent(event_id, delete_all){
-    jQuery.ajax({
-        data: 'id=' + event_id + '&delete_all='+delete_all,
-        dataType: 'script',
-        type: 'post',
-        url: "/events/destroy"
-    });
+  jQuery.ajax({
+    data: 'authenticity_token=' + authenticity_token + '&delete_all=' + delete_all,
+    dataType: 'script',
+    type: 'delete',
+    url: "/events/" + event_id,
+    success: refetch_events_and_close_dialog
+  });
+}
+
+function refetch_events_and_close_dialog() {
+  $('#calendar').fullCalendar( 'refetchEvents' );
+  $('.dialog:visible').dialog('destroy');
 }
 
 function showPeriodAndFrequency(value){
@@ -103,7 +109,7 @@ $(document).ready(function(){
       url: $(this).attr('action'),
       beforeSend: show_spinner,
       complete: hide_spinner,
-      success: handle_success,
+      success: refetch_events_and_close_dialog,
       error: handle_error
     });
 
@@ -113,11 +119,6 @@ $(document).ready(function(){
 
     function hide_spinner() {
       $spinner.hide();
-    }
-
-    function handle_success() {
-      $('#calendar').fullCalendar( 'refetchEvents' );
-      $('.dialog:visible').dialog('destroy');
     }
 
     function handle_error(xhr) {
